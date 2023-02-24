@@ -1,11 +1,11 @@
 Class {
-	#name : #BaseloneOfSystemHashingSHA512,
+	#name : #BaselineOfSystemHashingSHA512,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfSystemHashingSHA512
 }
 
 { #category : #baselines }
-BaseloneOfSystemHashingSHA512 >> baseline: spec [
+BaselineOfSystemHashingSHA512 >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
