@@ -1,0 +1,15 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'BaseloneOfSystemHashingSHA512',
+      #directory : 'src',
+      #onWarningLog: true,
+      #onConflict : #useLoaded,
+      #load : [ 'default' ],
+      #platforms : [ #pharo ]
+    }
+  ],
+  #testing : {
+    #categories : [ 'System-Hashing-SHA512-Test*' ]
+  }
+}
