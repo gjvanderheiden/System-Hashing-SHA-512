@@ -1,7 +1,7 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'BaseloneOfSystemHashingSHA512',
+      #baseline : 'SystemHashingSHA512',
       #directory : 'src',
       #onWarningLog: true,
       #onConflict : #useLoaded,
