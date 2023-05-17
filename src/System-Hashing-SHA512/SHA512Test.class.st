@@ -37,3 +37,18 @@ SHA512Test >> testHashStream [
 		            '8e959b75dae313da8cf4f72814fc143f8f7779c6eb9f7fa17299aeadb6889018501d289e4900f7e4331b99dec4b5433ac7d329eeb6dd26545e96e55b874be909'.
 	self assert: result equals: expected
 ]
+
+{ #category : #test }
+SHA512Test >> testHashStreamTwice [
+
+	| result expected |
+	result := SHA512 new hashStream: (ReadStream on: 'aa' utf8Encoded).
+   
+	expected := 'f6c5600ed1dbdcfdf829081f5417dccbbd2b9288e0b427e65c8cf67e274b69009cd142475e15304f599f429f260a661b5df4de26746459a3cef7f32006e5d1c1'.
+
+	self assert: result hex equals: expected.
+
+		            
+
+
+]

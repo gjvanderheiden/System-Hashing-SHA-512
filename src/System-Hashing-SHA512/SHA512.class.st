@@ -9,8 +9,7 @@ Class {
 		'totalE',
 		'totalF',
 		'totalG',
-		'totalH',
-		'totals'
+		'totalH'
 	],
 	#category : #'System-Hashing-SHA512-SHA512'
 }
@@ -155,14 +154,14 @@ SHA512 >> finalHash [
 	"Concatenate the final totals to build the 512-bit integer result."
 	"Details: If the primitives are supported, the results are in the totals array. Otherwise, they are in the instance variables totalA through totalE."
 
-		^ (totalA asInteger bitShift: 448) +
-		  (totalB asInteger bitShift: 384) +
-		  (totalC asInteger bitShift: 320) +	
-		  (totalD asInteger bitShift: 256) +
-		  (totalE asInteger bitShift: 192) +
-		  (totalF asInteger bitShift: 128) +
-		  (totalG asInteger bitShift:  64) +
-		  (totalH asInteger).
+		^ (totalA copy asInteger bitShift: 448) +
+		  (totalB copy asInteger bitShift: 384) +
+		  (totalC copy asInteger bitShift: 320) +	
+		  (totalD copy asInteger bitShift: 256) +
+		  (totalE copy asInteger bitShift: 192) +
+		  (totalF copy asInteger bitShift: 128) +
+		  (totalG copy asInteger bitShift:  64) +
+		  (totalH copy asInteger).
 ]
 
 { #category : #accessing }
@@ -171,7 +170,7 @@ SHA512 >> hashStream: aPositionableStream [
 	"SHA512 new hashStream: (ReadStream on: 'foo')"
 
 	| startPosition buf bitLength |
-	self initializeTotals.
+
 
 	aPositionableStream atEnd ifTrue: [ self processFinalBuffer: #() bitLength: 0 ].
 
@@ -188,6 +187,12 @@ SHA512 >> hashStream: aPositionableStream [
 ]
 
 { #category : #private }
+SHA512 >> initialize [
+	
+	self initializeTotals.
+]
+
+{ #category : #private }
 SHA512 >> initializeTotals [
 	"Initialize totalA through totalE to their seed values."
 
@@ -200,22 +205,7 @@ SHA512 >> initializeTotals [
 	totalF := SixtyFourBitRegister new loadFrom: self class h5.
 	totalG := SixtyFourBitRegister new loadFrom: self class h6.
 	totalH := SixtyFourBitRegister new loadFrom: self class h7.
-	self initializeTotalsArray.
-]
 
-{ #category : #private }
-SHA512 >> initializeTotalsArray [
-	"Initialize the totals array from the registers for use with the primitives."
-
-	totals := DoubleWordArray new: 8.
-	totals at: 1 put: totalA asInteger.
-	totals at: 2 put: totalB asInteger.
-	totals at: 3 put: totalC asInteger.
-	totals at: 4 put: totalD asInteger.
-	totals at: 5 put: totalE asInteger.
-	totals at: 6 put: totalF asInteger.
-	totals at: 7 put: totalG asInteger.
-	totals at: 8 put: totalH asInteger.
 ]
 
 { #category : #private }
@@ -223,7 +213,6 @@ SHA512 >> processBuffer: aByteArray [
 	"Process given 64-byte buffer, accumulating the results in totalA through totalE."
 
 	| a b c d e f g h w |
-	totals := nil.
 
 	"initialize registers a through e from the current totals" 
 	a := totalA copy.
